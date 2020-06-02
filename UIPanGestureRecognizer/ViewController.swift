@@ -26,9 +26,15 @@ class ViewController: UIViewController {
         imageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         imageView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture)))
+        imageView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(handlePinch)))
         imageView.isUserInteractionEnabled = true
     }
     
+    
+    @objc func handlePinch(sender: UIPinchGestureRecognizer){
+        sender.view?.transform = (sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale))!
+        sender.scale = 1.0
+    }
     
     @objc func handlePanGesture(gesture: UIPanGestureRecognizer) {
         //  if gesture.state == .began {
@@ -39,7 +45,8 @@ class ViewController: UIViewController {
             imageView.transform = CGAffineTransform(translationX: translation.x, y: translation.y)
         } else if gesture.state == .ended {
             //  print("ended")
-            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.4,  options: .allowAnimatedContent, animations: {self.imageView.transform = .identity})
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.4,  options: .allowAnimatedContent, animations: {self.imageView.transform = .identity
+            })
         }
     }
 }
